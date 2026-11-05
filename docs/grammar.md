@@ -16,9 +16,9 @@
 
 本文档中会对部分文字添加颜色。
 
-- <font color=yellow>黄色</font>部分表示这里提到了一处 Simplified Python 相对于 Python 做出的行为简化，仍然被标准 Python 兼容，在设计上希望用于减少你的实现工作量；
+- <font color=orange>黄色</font>部分表示这里提到了一处 Simplified Python 相对于 Python 做出的行为简化，仍然被标准 Python 兼容，在设计上希望用于减少你的实现工作量；
 
-- <font color=yellow>黄色</font>部分也可能是一个简单的行为退化提醒：Simplified Python 由于做出了行为简化，导致其他未修改行为在简化后的语法中也相应退化成了实现难度更低的方式。
+- <font color=orange>黄色</font>部分也可能是一个简单的行为退化提醒：Simplified Python 由于做出了行为简化，导致其他未修改行为在简化后的语法中也相应退化成了实现难度更低的方式。
 
 - <font color=red>红色</font>部分表示这里提到了一处 Simplified Python 参考 C++ 相关行为模式，相对于 Python 做出的行为修改，它们不被标准 Python 兼容，但是你一般可以从 C++ 中找到这个设计理念的影子，以方便你理解与实现。
 
@@ -79,7 +79,7 @@ not
 
 标识符的第一个字符必须是英文字符，之后的字符可以是英文字符，数字字符或下划线。
 
-<font color=yellow>尝试让标识符的长度超过64个字符是未定义行为。</font>
+<font color=orange>尝试让标识符的长度超过64个字符是未定义行为。</font>
 
 #### 2.3 字面量（Literals）
 
@@ -99,11 +99,11 @@ not
   
   - 检测到前一个引号后，其到下一个同类型引号之间的内容就是字符串的内容。比如 `"'12''"` 的内容是 `'12''` （或者说 `"\'12\'\'"`）
   
-  - <font color=yellow>字符串字面量总是被解释成 ASCII 字符中的可显示字符（printable character）或空白符构成的序列，解释出超过该字符集内容的字符串被视作为产生了未定义行为。</font>具体解释行为可以参考 C++ 的字符串字面量相关规则。
+  - <font color=orange>字符串字面量总是被解释成 ASCII 字符中的可显示字符（printable character）或空白符构成的序列，解释出超过该字符集内容的字符串被视作为产生了未定义行为。</font>具体解释行为可以参考 C++ 的字符串字面量相关规则。
 
 - 格式化字符串字面量（format string literal / f-string literal）：形如 `f"..."` 的字符串字面量。它的内容由普通字符串文字和由 `{}` 包围的表达式混合构成。
   
-  - 最外层必须写成 `f"` 开头、`"` 结尾，不允许用单引号代替双引号（`f'...'` 不合法）。<font color=yellow>此处弱于标准 Python 语法。</font>
+  - 最外层必须写成 `f"` 开头、`"` 结尾，不允许用单引号代替双引号（`f'...'` 不合法）。<font color=orange>此处弱于标准 Python 语法。</font>
   
   - 字面内容部分与普通字符串相同，支持字符串转义序列（如 `\"`、`\\`）。其中 `\"` 表示一个引号字符，不会结束格式化字符串。
   
@@ -115,7 +115,7 @@ not
   
   - 如果 `{ ... }` 内表达式的结果是 `tuple`，按内置函数 `str` 的规定属于未定义行为。
   
-  - 格式化字符串不能与相邻的字符串字面量拼接：`f"a" "b"`、`f"a"'b'`、`f"a"f"b"` 均不合法。<font color=yellow>此处弱于标准 Python 语法</font>，但相关实现不在本项目的考察范围之内。
+  - 格式化字符串不能与相邻的字符串字面量拼接：`f"a" "b"`、`f"a"'b'`、`f"a"f"b"` 均不合法。<font color=orange>此处弱于标准 Python 语法</font>，但相关实现不在本项目的考察范围之内。
   
   - 具体示例：
     
@@ -177,11 +177,11 @@ not
     p, q, r = f()
     ```
   
-  - <font color=yellow>让一个具名变量存储元组是未定义行为，显式构造元组也是未定义行为。</font>
+  - <font color=orange>让一个具名变量存储元组是未定义行为，显式构造元组也是未定义行为。</font>
   
   - 不要求同一个元组中的数据类型相同，例如 `(int, str, None, None)` 是合法的。
 
-请注意，Simplified Python 支持的五种可绑定变量的数据类型（`tuple` 不算）全部是不可变数据类型，所以标准 Python 中赋值/函数参数传递等行为中，<font color=yellow>按引用传递退化为按值传递</font>。
+请注意，Simplified Python 支持的五种可绑定变量的数据类型（`tuple` 不算）全部是不可变数据类型，所以标准 Python 中赋值/函数参数传递等行为中，<font color=orange>按引用传递退化为按值传递</font>。
 
 ### 2. 表达式（expressions）
 
@@ -286,7 +286,7 @@ var = Expr
 
 其意义是将 `expr` 求值后，作为一个右值赋值给 `var` 对应的变量。
 
-再次强调，在我们的语法中，所有的赋值行为都可以被视作<font color=yellow>按值传递</font>。
+再次强调，在我们的语法中，所有的赋值行为都可以被视作<font color=orange>按值传递</font>。
 
 如果在当前语境下，没有存活的名称为 `var` 的变量，则该变量会被即刻定义，开始其生命周期。如果存在生命周期未完的 `var` 变量，则它指向的就是这个变量。
 
@@ -296,7 +296,7 @@ var = Expr
 
 本行为是对标准 Python 语法中可迭代对象解包（Iterable unpacking）的简化实现。
 
-在 Simplified Python 中，保证可迭代对象解包只会出现以下两种情形（<font color=yellow>同时也是 `tuple` 数据类型的唯二作用处</font>）：
+在 Simplified Python 中，保证可迭代对象解包只会出现以下两种情形（<font color=orange>同时也是 `tuple` 数据类型的唯二作用处</font>）：
 
 ```python
 var1, var2, ..., varN = Expr1, Expr2, ..., ExprN
@@ -606,7 +606,7 @@ Simplified Python 有以下五个内置函数，它们不需要输入文件定�
   
   - 可以有任意个参数，逐个输出，中间用空格分隔，输出后换行。
   
-  - <font color=yellow>尝试输出 `tuple` 是未定义行为。</font>
+  - <font color=orange>尝试输出 `tuple` 是未定义行为。</font>
   
   - <font color=red>输出 `float` 时强制保留 6 位小数。</font>
   
@@ -638,7 +638,7 @@ Simplified Python 有以下五个内置函数，它们不需要输入文件定�
   
   - `str(None) = "None"`。
   
-  - <font color=yellow> 不支持对 `tuple` 的转换。</font>
+  - <font color=orange> 不支持对 `tuple` 的转换。</font>
 
 - `bool`：单参数函数， 将 `int` 或 `float` 或 `str` 或 `None` 转成 `bool`。
   
@@ -648,7 +648,7 @@ Simplified Python 有以下五个内置函数，它们不需要输入文件定�
   
   - `bool(None) = False`。
   
-  - <font color=yellow>不支持对 `tuple` 的转换。</font>
+  - <font color=orange>不支持对 `tuple` 的转换。</font>
 
 上述转换函数中，请自行将 C++ `int` 相关转换推广为 `int2048` 相关转换；
 
@@ -658,7 +658,7 @@ Simplified Python 有以下五个内置函数，它们不需要输入文件定�
 
 只有函数调用会产生新的作用域，代码块不构成代码块级作用域。定义在函数级作用域中的变量的生命周期从一次函数调用中定义该变量时开始，在该次函数调用结束时结束。
 
-函数作用域应当构成栈形，<font color=yellow>栈深度超过2000层为未定义行为</font>。
+函数作用域应当构成栈形，<font color=orange>栈深度超过2000层为未定义行为</font>。
 
 > 关于 Simplified Python 作用域规则下的变量可见性：
 > 
