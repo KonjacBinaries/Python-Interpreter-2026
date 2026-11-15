@@ -1229,4 +1229,11 @@ double int2048::to_double() const {
     }
     return val;
 }
+bool int2048::is_negative() const {
+    return negative_;
+}
+void int2048::to_negative() {
+    negative_ ^= true;
+    return;
+}
 } // namespace sjtu

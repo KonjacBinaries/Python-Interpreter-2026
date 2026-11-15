@@ -58,6 +58,8 @@ private:
   void push_back(const unsigned int &);
   void resize(const unsigned int &, const unsigned int &);
 public:
+  bool is_negative() const;
+  void to_negative();
   bool is_zero() const;
   // 空构造函数
   int2048();
