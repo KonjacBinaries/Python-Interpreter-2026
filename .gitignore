@@ -15,3 +15,10 @@ myimple.py
 .claude/
 .cc-history/
 AGENTS.md
+
+# test files
+.vscode/
+src/.vscode/
+src/SimpleTest.cpp
+src/a
+temp/

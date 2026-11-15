@@ -1,6 +1,4 @@
 #pragma once
-#ifndef SJTU_BIGINTEGER
-#define SJTU_BIGINTEGER
 
 // Integer 1:
 // 实现一个有符号的大整数类，只需支持简单的加减
@@ -9,9 +7,6 @@
 // 实现一个有符号的大整数类，支持加减乘除，并重载相关运算符
 
 // 请不要使用除了以下头文件之外的其它头文件
-#include <complex>
-#include <cstdio>
-#include <cstring>
 #include <iostream>
 #include <vector>
 
@@ -50,7 +45,6 @@ private:
   std::vector<unsigned int> digits_; // 数位
   bool negative_; // 是否为负
   // 判断是否为0
-  bool is_zero() const;
   /**
    * 标准化，原则
    * 1. 无前导0
@@ -64,6 +58,7 @@ private:
   void push_back(const unsigned int &);
   void resize(const unsigned int &, const unsigned int &);
 public:
+  bool is_zero() const;
   // 空构造函数
   int2048();
   // long long 构造函数
@@ -85,6 +80,8 @@ public:
   void read(long long);
   // 输出储存的大整数，无需换行
   void print() const;
+  std::string to_string() const;
+  double to_double() const;
 
   // 加上一个大整数
   int2048 &add(const int2048 &);
@@ -191,4 +188,3 @@ public:
 };
 } // namespace sjtu
 
-#endif

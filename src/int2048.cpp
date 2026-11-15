@@ -1,5 +1,7 @@
 #include "int2048.h"
 
+#include <sstream>
+
 namespace sjtu {
 
 bool int2048::is_zero() const{
@@ -53,6 +55,12 @@ int2048::int2048(const std::string &number) {
     negative_ = (number[0] == '-');
     int non_negative = (negative_ ^ 1);
     int temp, upperbound, base_size = BASE_SIZE_;
+    for (int point = number_size - 1; point >= negative_; --point) {
+        if (number[point] == '.') {
+            number_size = point;
+            break;
+        }
+    }
     for (int i = number_size - 1; i >= negative_; i -= base_size) {
         if (i + non_negative < base_size) {
             upperbound = i + non_negative - 1;
@@ -132,12 +140,18 @@ void int2048::read(const std::string &number) {
     digits_.clear();
     negative_ = (number[0] == '-');
     int non_negative = (negative_ ^ 1);
-    int temp, upperbound;
-    for (int i = number_size - 1; i >= negative_; i -= BASE_SIZE_) {
-        if (i + non_negative < BASE_SIZE_) {
+    int temp, upperbound, base_size = BASE_SIZE_;
+    for (int point = number_size - 1; point >= negative_; --point) {
+        if (number[point] == '.') {
+            number_size = point;
+            break;
+        }
+    }
+    for (int i = number_size - 1; i >= negative_; i -= base_size) {
+        if (i + non_negative < base_size) {
             upperbound = i + non_negative - 1;
         } else {
-            upperbound = BASE_SIZE_ - 1;
+            upperbound = base_size - 1;
         }
         temp = 0;
         for (int j = upperbound; j >= 0; --j) {
@@ -1197,5 +1211,22 @@ int2048 operator%(const int2048 &A, const int2048 &B) {
     int2048 Q, R;
     divide(A, B, Q, R);
     return R;
+}
+std::string int2048::to_string() const {
+    std::stringstream str;
+    str.clear();
+    str << *this;
+    return str.str();
+}
+double int2048::to_double() const {
+    double base_ = BASE_;
+    double val = 0.0;
+    for (int i = digits_.size(); i >= 1; --i) {
+        val = val * base_ + static_cast<double>(digits_[i - 1]);
+    }
+    if (negative_) {
+        val = -val;
+    }
+    return val;
 }
 } // namespace sjtu
