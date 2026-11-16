@@ -751,17 +751,17 @@ std::any EvalVisitor::visitTestlist(Python3Parser::TestlistContext *ctx) {
 
 // 此函数为print专用函数
 std::any EvalVisitor::visitArglist(Python3Parser::ArglistContext *ctx) {
-    std::vector<std::string> output_context{};
+    std::vector<Single> output_value{};
     for (auto *child : ctx->children) {
         if (auto *argument = dynamic_cast<Python3Parser::ArgumentContext *>(child)) {
             // 注意，必须先求出所有的输出参数，再输出，否则万一求参的时候也有输出，直接就炸了
-            output_context.push_back(convertToStr(std::get<Single>(std::any_cast<Value>(visit(argument)))));
+            output_value.push_back(std::get<Single>(std::any_cast<Value>(visit(argument))));
         }
     }
     int cnt = 0;
-    for (auto i : output_context) {
-        std::cout << i;
-        if ((++cnt) < output_context.size()) {
+    for (auto value : output_value) {
+        std::cout << value;
+        if ((++cnt) < output_value.size()) {
             std::putchar(' ');
         }
     }
