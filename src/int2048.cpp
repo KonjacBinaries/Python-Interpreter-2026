@@ -1219,15 +1219,7 @@ std::string int2048::to_string() const {
     return str.str();
 }
 double int2048::to_double() const {
-    double base_ = BASE_;
-    double val = 0.0;
-    for (int i = digits_.size(); i >= 1; --i) {
-        val = val * base_ + static_cast<double>(digits_[i - 1]);
-    }
-    if (negative_) {
-        val = -val;
-    }
-    return val;
+    return std::stod(to_string());
 }
 bool int2048::is_negative() const {
     return negative_;
